@@ -157,3 +157,6 @@
   }
   .animate-shake { animation: shake 0.45s ease-in-out; }
 }
+
+#lovable-badge { display: none !important; }
+
