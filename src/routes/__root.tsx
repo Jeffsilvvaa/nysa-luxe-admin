@@ -9,6 +9,7 @@ import {
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/lib/auth";
 import { CartProvider } from "@/lib/cart";
+import { CustomerAuthProvider } from "@/lib/customer-auth";
 
 import appCss from "../styles.css?url";
 
@@ -87,10 +88,12 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <CartProvider>
-          <Outlet />
-          <Toaster richColors position="top-right" />
-        </CartProvider>
+        <CustomerAuthProvider>
+          <CartProvider>
+            <Outlet />
+            <Toaster richColors position="top-right" />
+          </CartProvider>
+        </CustomerAuthProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

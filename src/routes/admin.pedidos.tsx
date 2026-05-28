@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
-import { MessageCircle, MapPin, Package as PackageIcon, ShoppingBag } from "lucide-react";
+import { MessageCircle, MapPin, Package as PackageIcon, ShoppingBag, Send } from "lucide-react";
 import { brl, dateBR } from "@/lib/format";
 import { toast } from "sonner";
 
@@ -28,8 +28,33 @@ type Order = {
   id: string; customer_name: string; customer_whatsapp: string | null;
   customer_address: string | null; subtotal: number; total: number;
   status: Status; created_at: string;
+  delivery_type?: string | null; payment_method?: string | null;
   order_items: { id: string; product_name: string; quantity: number; unit_price: number; subtotal: number }[];
 };
+
+function buildWhatsMessage(o: Order) {
+  const items = (o.order_items ?? []).map((i) => `• ${i.product_name} x${i.quantity}`).join("\n");
+  const lines = [
+    `Olá ${o.customer_name} ✨`,
+    "",
+    "Recebemos seu pedido com sucesso!",
+    "",
+    `🧾 Pedido: #${o.id.slice(0, 8).toUpperCase()}`,
+    "",
+    `💎 Itens:\n${items || "—"}`,
+    "",
+    `💰 Total: ${new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(Number(o.total))}`,
+    "",
+    `💳 Pagamento: ${o.payment_method ?? "A combinar"}`,
+    "",
+    `🚚 Entrega: ${o.delivery_type === "retirada" ? "Retirada" : "Entrega para todo Brasil"}`,
+  ];
+  if (o.delivery_type !== "retirada" && o.customer_address) {
+    lines.push("", `📍 Endereço:\n${o.customer_address}`);
+  }
+  lines.push("", "Logo iremos separar seu pedido 💖");
+  return lines.join("\n");
+}
 
 function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -126,7 +151,7 @@ function OrdersPage() {
                     )}
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-col items-end gap-3 sm:flex-row sm:items-center sm:gap-4">
                   <div className="text-right">
                     <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Total</p>
                     <p className="font-display text-2xl text-gradient-gold">{brl(Number(o.total))}</p>
@@ -137,6 +162,15 @@ function OrdersPage() {
                       {STATUSES.map((s) => <SelectItem key={s} value={s} className="capitalize">{s}</SelectItem>)}
                     </SelectContent>
                   </Select>
+                  {o.customer_whatsapp && (
+                    <a
+                      href={`https://api.whatsapp.com/send?phone=${o.customer_whatsapp.replace(/\D/g, "")}&text=${encodeURIComponent(buildWhatsMessage(o))}`}
+                      target="_blank" rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-emerald-700"
+                    >
+                      <Send className="h-4 w-4" /> Chamar Cliente
+                    </a>
+                  )}
                 </div>
               </div>
               <div className="p-5 bg-muted/30">

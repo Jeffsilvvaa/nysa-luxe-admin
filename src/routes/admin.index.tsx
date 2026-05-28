@@ -1,13 +1,14 @@
 import { useEffect, useState, useMemo } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  DollarSign, ShoppingBag, Package, Users, TrendingUp, Receipt,
+  DollarSign, ShoppingBag, Package, Users, TrendingUp, Receipt, Copy, ExternalLink, Check,
 } from "lucide-react";
 import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
   BarChart, Bar, PieChart, Pie, Cell, Legend,
 } from "recharts";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { MetricCard } from "@/components/admin/MetricCard";
 import { brl } from "@/lib/format";
@@ -122,6 +123,8 @@ function Dashboard() {
         <h2 className="font-display text-3xl md:text-4xl mt-1">Sua boutique em tempo real</h2>
         <div className="gold-divider w-24 mt-3" />
       </div>
+
+      <StoreLinkCard />
 
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
         <MetricCard label="Receita total" value={brl(metrics.revenue)} icon={DollarSign} loading={loading} delay={0} />
@@ -238,5 +241,44 @@ function Dashboard() {
         </motion.div>
       </div>
     </div>
+  );
+}
+
+function StoreLinkCard() {
+  const [copied, setCopied] = useState(false);
+  const url = typeof window !== "undefined" ? `${window.location.origin}/loja` : "/loja";
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      toast.success("Link copiado!");
+      setTimeout(() => setCopied(false), 1800);
+    } catch { toast.error("Não foi possível copiar"); }
+  };
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+      className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-card to-accent/40 p-5 shadow-soft sm:p-6"
+    >
+      <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-gold opacity-20 blur-3xl" />
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Sua boutique online</p>
+          <h3 className="font-display text-2xl">Link da sua Loja</h3>
+          <p className="mt-1 truncate text-sm text-muted-foreground">{url}</p>
+        </div>
+        <div className="flex gap-2">
+          <button onClick={copy}
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium transition hover:border-[var(--gold)] hover:shadow-soft">
+            {copied ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />}
+            {copied ? "Copiado" : "Copiar Link"}
+          </button>
+          <a href={url} target="_blank" rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-gold px-4 py-2 text-sm font-medium text-primary-foreground shadow-gold transition hover:opacity-90">
+            <ExternalLink className="h-4 w-4" /> Abrir Loja
+          </a>
+        </div>
+      </div>
+    </motion.div>
   );
 }
