@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LojaRouteImport } from './routes/loja'
+import { Route as ContaRouteImport } from './routes/conta'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
@@ -22,6 +23,11 @@ import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
 const LojaRoute = LojaRouteImport.update({
   id: '/loja',
   path: '/loja',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContaRoute = ContaRouteImport.update({
+  id: '/conta',
+  path: '/conta',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -68,6 +74,7 @@ const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/conta': typeof ContaRoute
   '/loja': typeof LojaRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/conta': typeof ContaRoute
   '/loja': typeof LojaRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -90,6 +98,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/conta': typeof ContaRoute
   '/loja': typeof LojaRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/conta'
     | '/loja'
     | '/admin/analytics'
     | '/admin/configuracoes'
@@ -113,6 +123,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/conta'
     | '/loja'
     | '/admin/analytics'
     | '/admin/configuracoes'
@@ -124,6 +135,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
+    | '/conta'
     | '/loja'
     | '/admin/analytics'
     | '/admin/configuracoes'
@@ -136,6 +148,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
+  ContaRoute: typeof ContaRoute
   LojaRoute: typeof LojaRoute
 }
 
@@ -146,6 +159,13 @@ declare module '@tanstack/react-router' {
       path: '/loja'
       fullPath: '/loja'
       preLoaderRoute: typeof LojaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conta': {
+      id: '/conta'
+      path: '/conta'
+      fullPath: '/conta'
+      preLoaderRoute: typeof ContaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -230,6 +250,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
+  ContaRoute: ContaRoute,
   LojaRoute: LojaRoute,
 }
 export const routeTree = rootRouteImport

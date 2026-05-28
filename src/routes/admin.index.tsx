@@ -1,13 +1,14 @@
 import { useEffect, useState, useMemo } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  DollarSign, ShoppingBag, Package, Users, TrendingUp, Receipt,
+  DollarSign, ShoppingBag, Package, Users, TrendingUp, Receipt, Copy, ExternalLink, Check,
 } from "lucide-react";
 import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
   BarChart, Bar, PieChart, Pie, Cell, Legend,
 } from "recharts";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { MetricCard } from "@/components/admin/MetricCard";
 import { brl } from "@/lib/format";
@@ -122,6 +123,8 @@ function Dashboard() {
         <h2 className="font-display text-3xl md:text-4xl mt-1">Sua boutique em tempo real</h2>
         <div className="gold-divider w-24 mt-3" />
       </div>
+
+      <StoreLinkCard />
 
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
         <MetricCard label="Receita total" value={brl(metrics.revenue)} icon={DollarSign} loading={loading} delay={0} />

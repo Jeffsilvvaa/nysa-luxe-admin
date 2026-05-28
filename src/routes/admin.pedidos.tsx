@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
-import { MessageCircle, MapPin, Package as PackageIcon, ShoppingBag } from "lucide-react";
+import { MessageCircle, MapPin, Package as PackageIcon, ShoppingBag, Send } from "lucide-react";
 import { brl, dateBR } from "@/lib/format";
 import { toast } from "sonner";
 
