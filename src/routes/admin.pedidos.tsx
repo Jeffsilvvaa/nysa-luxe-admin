@@ -28,8 +28,33 @@ type Order = {
   id: string; customer_name: string; customer_whatsapp: string | null;
   customer_address: string | null; subtotal: number; total: number;
   status: Status; created_at: string;
+  delivery_type?: string | null; payment_method?: string | null;
   order_items: { id: string; product_name: string; quantity: number; unit_price: number; subtotal: number }[];
 };
+
+function buildWhatsMessage(o: Order) {
+  const items = (o.order_items ?? []).map((i) => `• ${i.product_name} x${i.quantity}`).join("\n");
+  const lines = [
+    `Olá ${o.customer_name} ✨`,
+    "",
+    "Recebemos seu pedido com sucesso!",
+    "",
+    `🧾 Pedido: #${o.id.slice(0, 8).toUpperCase()}`,
+    "",
+    `💎 Itens:\n${items || "—"}`,
+    "",
+    `💰 Total: ${new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(Number(o.total))}`,
+    "",
+    `💳 Pagamento: ${o.payment_method ?? "A combinar"}`,
+    "",
+    `🚚 Entrega: ${o.delivery_type === "retirada" ? "Retirada" : "Entrega para todo Brasil"}`,
+  ];
+  if (o.delivery_type !== "retirada" && o.customer_address) {
+    lines.push("", `📍 Endereço:\n${o.customer_address}`);
+  }
+  lines.push("", "Logo iremos separar seu pedido 💖");
+  return lines.join("\n");
+}
 
 function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
