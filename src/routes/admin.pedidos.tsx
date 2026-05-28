@@ -151,7 +151,7 @@ function OrdersPage() {
                     )}
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-col items-end gap-3 sm:flex-row sm:items-center sm:gap-4">
                   <div className="text-right">
                     <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Total</p>
                     <p className="font-display text-2xl text-gradient-gold">{brl(Number(o.total))}</p>
@@ -162,6 +162,15 @@ function OrdersPage() {
                       {STATUSES.map((s) => <SelectItem key={s} value={s} className="capitalize">{s}</SelectItem>)}
                     </SelectContent>
                   </Select>
+                  {o.customer_whatsapp && (
+                    <a
+                      href={`https://api.whatsapp.com/send?phone=${o.customer_whatsapp.replace(/\D/g, "")}&text=${encodeURIComponent(buildWhatsMessage(o))}`}
+                      target="_blank" rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-soft transition hover:bg-emerald-700"
+                    >
+                      <Send className="h-4 w-4" /> Chamar Cliente
+                    </a>
+                  )}
                 </div>
               </div>
               <div className="p-5 bg-muted/30">
