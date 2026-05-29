@@ -1,9 +1,9 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Lock, LogOut } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 
-export const Route = createFileRoute("/admin/configuracoes")({ component: SettingsPage });
+
 
 function SettingsPage() {
   const { logout } = useAuth();
@@ -41,7 +41,7 @@ function SettingsPage() {
 
       <Button
         variant="outline"
-        onClick={() => { logout(); navigate({ to: "/" }); }}
+        onClick={() => { logout(); navigate("/"); }}
         className="border-destructive/30 text-destructive hover:bg-destructive/10"
       >
         <LogOut className="w-4 h-4 mr-2" /> Encerrar sessão
@@ -49,3 +49,5 @@ function SettingsPage() {
     </div>
   );
 }
+
+export default SettingsPage;

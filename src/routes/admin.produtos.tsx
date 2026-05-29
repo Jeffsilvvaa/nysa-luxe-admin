@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const Route = createFileRoute("/admin/produtos")({ component: ProductsPage });
+
 
 type Row = Product & { id: string; created_at: string };
 
@@ -161,3 +161,5 @@ function ProductsPage() {
     </div>
   );
 }
+
+export default ProductsPage;

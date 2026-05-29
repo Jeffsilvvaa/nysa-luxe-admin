@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
@@ -9,15 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { brl, dateBR } from "@/lib/format";
 
-export const Route = createFileRoute("/conta")({
-  head: () => ({
-    meta: [
-      { title: "Minha Conta — NYSÁ Joias" },
-      { name: "description", content: "Acompanhe seus pedidos e dados da NYSÁ Joias." },
-    ],
-  }),
-  component: ContaPage,
-});
+
 
 const STATUS_LABEL: Record<string, string> = {
   pendente: "Aguardando pagamento",
@@ -39,7 +31,7 @@ function ContaPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && !user) navigate({ to: "/loja" });
+    if (!loading && !user) navigate("/loja");
   }, [loading, user, navigate]);
 
   const { data: orders, isLoading } = useQuery({
@@ -71,7 +63,7 @@ function ContaPage() {
           <Link to="/loja" className="inline-flex items-center gap-2 text-sm text-muted-foreground transition hover:text-foreground">
             <ArrowLeft className="h-4 w-4" /> Voltar à loja
           </Link>
-          <Button variant="ghost" size="sm" onClick={async () => { await signOut(); navigate({ to: "/loja" }); }}>
+          <Button variant="ghost" size="sm" onClick={async () => { await signOut(); navigate("/loja"); }}>
             <LogOut className="mr-2 h-4 w-4" /> Sair
           </Button>
         </div>
@@ -141,3 +133,5 @@ function ContaPage() {
     </div>
   );
 }
+
+export default ContaPage;

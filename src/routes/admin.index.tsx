@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+
 import {
   DollarSign, ShoppingBag, Package, Users, TrendingUp, Receipt, Copy, ExternalLink, Check,
 } from "lucide-react";
@@ -13,7 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { MetricCard } from "@/components/admin/MetricCard";
 import { brl } from "@/lib/format";
 
-export const Route = createFileRoute("/admin/")({ component: Dashboard });
+
 
 type Order = { id: string; total: number; status: string; created_at: string };
 type Product = { id: string; name: string; stock: number; active: boolean };
@@ -282,3 +282,5 @@ function StoreLinkCard() {
     </motion.div>
   );
 }
+
+export default Dashboard;

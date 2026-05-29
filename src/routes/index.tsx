@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Lock, Mail, KeyRound, Sparkles } from "lucide-react";
@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useAuth } from "@/lib/auth";
 
-export const Route = createFileRoute("/")({ component: Lockscreen });
+
 
 function Lockscreen() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ function Lockscreen() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (isAuthed) navigate({ to: "/admin" });
+    if (isAuthed) navigate("/admin");
   }, [isAuthed, navigate]);
 
   const submit = async (e: React.FormEvent) => {
@@ -29,7 +29,7 @@ function Lockscreen() {
     setLoading(false);
     if (res.ok) {
       toast.success("Bem-vinda, NYSÁ ✨");
-      navigate({ to: "/admin" });
+      navigate("/admin");
     } else {
       setShake(true);
       setTimeout(() => setShake(false), 500);
@@ -125,3 +125,5 @@ function Lockscreen() {
     </main>
   );
 }
+
+export default Lockscreen;

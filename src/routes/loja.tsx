@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
@@ -17,17 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/loja")({
-  head: () => ({
-    meta: [
-      { title: "NYSÁ Joias — Semijoias e Acessórios Premium" },
-      { name: "description", content: "Boutique online de semijoias e acessórios premium. Peças selecionadas com entrega para todo o Brasil." },
-      { property: "og:title", content: "NYSÁ Joias — Boutique Premium" },
-      { property: "og:description", content: "Semijoias e acessórios desenhados para celebrar cada detalhe da sua história." },
-    ],
-  }),
-  component: LojaPage,
-});
+
 
 const WPP_LOJA = "5527999611722";
 const INSTAGRAM_URL = "https://www.instagram.com/nysa__joias_";
@@ -780,3 +770,5 @@ function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (o: b
     </AnimatePresence>
   );
 }
+
+export default LojaPage;

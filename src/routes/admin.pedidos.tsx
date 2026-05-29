@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -11,7 +11,7 @@ import { MessageCircle, MapPin, Package as PackageIcon, ShoppingBag, Send } from
 import { brl, dateBR } from "@/lib/format";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/admin/pedidos")({ component: OrdersPage });
+
 
 const STATUSES = ["pendente", "pago", "separando", "enviado", "finalizado"] as const;
 type Status = typeof STATUSES[number];
@@ -193,3 +193,5 @@ function OrdersPage() {
     </div>
   );
 }
+
+export default OrdersPage;
