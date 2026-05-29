@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
@@ -17,7 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/loja")({
+({
   head: () => ({
     meta: [
       { title: "NYSÁ Joias — Semijoias e Acessórios Premium" },
@@ -780,3 +780,5 @@ function AuthDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (o: b
     </AnimatePresence>
   );
 }
+
+export default LojaPage;

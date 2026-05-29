@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,7 @@ import { Download, FileSpreadsheet, FileText, Package, ShoppingBag, Users } from
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 
-export const Route = createFileRoute("/admin/relatorios")({ component: ReportsPage });
+({ component: ReportsPage });
 
 type DataRow = Record<string, unknown>;
 
@@ -132,3 +132,5 @@ function ReportsPage() {
     </div>
   );
 }
+
+export default ReportsPage;
