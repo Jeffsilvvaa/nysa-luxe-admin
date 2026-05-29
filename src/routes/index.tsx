@@ -5,7 +5,6 @@ import { Lock, Mail, KeyRound, Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { toast } from "sonner";
 import { useAuth } from "@/lib/auth";
 
@@ -16,7 +15,6 @@ function Lockscreen() {
   const { isAuthed, login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [pin, setPin] = useState("");
   const [shake, setShake] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -27,16 +25,15 @@ function Lockscreen() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 350));
-    const ok = login(email, password, pin);
+    const res = await login(email, password);
     setLoading(false);
-    if (ok) {
+    if (res.ok) {
       toast.success("Bem-vinda, NYSÁ ✨");
       navigate({ to: "/admin" });
     } else {
       setShake(true);
       setTimeout(() => setShake(false), 500);
-      toast.error("Credenciais inválidas. Verifique e tente novamente.");
+      toast.error(res.error ?? "Credenciais inválidas.");
     }
   };
 
@@ -86,7 +83,7 @@ function Lockscreen() {
                   type="email"
                   autoComplete="email"
                   className="pl-9 h-11"
-                  placeholder="admin@nysa.com"
+                  placeholder="seu@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -103,39 +100,25 @@ function Lockscreen() {
                   type="password"
                   autoComplete="current-password"
                   className="pl-9 h-11"
-                  placeholder="••••••"
+                  placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
             </div>
-
-            <div className="space-y-2">
-              <Label className="text-xs uppercase tracking-wider">PIN de 4 dígitos</Label>
-              <div className="flex justify-center">
-                <InputOTP maxLength={4} value={pin} onChange={setPin}>
-                  <InputOTPGroup>
-                    <InputOTPSlot index={0} className="w-12 h-12 text-lg" />
-                    <InputOTPSlot index={1} className="w-12 h-12 text-lg" />
-                    <InputOTPSlot index={2} className="w-12 h-12 text-lg" />
-                    <InputOTPSlot index={3} className="w-12 h-12 text-lg" />
-                  </InputOTPGroup>
-                </InputOTP>
-              </div>
-            </div>
           </div>
 
           <Button
             type="submit"
-            disabled={loading || pin.length !== 4}
+            disabled={loading || !email || !password}
             className="w-full h-12 mt-7 bg-gradient-gold text-primary-foreground hover:opacity-90 transition shadow-gold tracking-widest uppercase text-xs font-semibold"
           >
             {loading ? "Validando..." : "Entrar no Painel"}
           </Button>
 
           <p className="text-[11px] text-center text-muted-foreground mt-5">
-            Demo · admin@nysa.com / admin / 1234
+            Acesso restrito a administradores autorizados.
           </p>
         </form>
       </motion.div>

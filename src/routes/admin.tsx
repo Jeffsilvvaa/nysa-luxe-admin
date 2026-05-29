@@ -20,20 +20,18 @@ const NAV = [
 ];
 
 function AdminLayout() {
-  const { isAuthed, logout } = useAuth();
+  const { isAuthed, loading, logout } = useAuth();
   const navigate = useNavigate();
-  const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
-  useEffect(() => { setMounted(true); }, []);
   useEffect(() => {
-    if (mounted && !isAuthed) navigate({ to: "/" });
-  }, [mounted, isAuthed, navigate]);
+    if (!loading && !isAuthed) navigate({ to: "/" });
+  }, [loading, isAuthed, navigate]);
 
   useEffect(() => { setMobileOpen(false); }, [location.pathname]);
 
-  if (!mounted || !isAuthed) {
+  if (loading || !isAuthed) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="w-8 h-8 rounded-full border-2 border-gold border-t-transparent animate-spin" />
@@ -84,7 +82,7 @@ function AdminLayout() {
 
       <div className="px-3 pb-5">
         <button
-          onClick={() => { logout(); navigate({ to: "/" }); }}
+          onClick={async () => { await logout(); navigate({ to: "/" }); }}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground transition"
         >
           <LogOut className="w-4 h-4" />
