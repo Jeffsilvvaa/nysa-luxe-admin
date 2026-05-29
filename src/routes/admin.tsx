@@ -8,7 +8,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-({ component: AdminLayout });
+
 
 const NAV = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },

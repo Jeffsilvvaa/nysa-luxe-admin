@@ -6,7 +6,7 @@ import { Download, FileSpreadsheet, FileText, Package, ShoppingBag, Users } from
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 
-({ component: ReportsPage });
+
 
 type DataRow = Record<string, unknown>;
 

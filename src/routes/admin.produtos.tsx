@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 
-({ component: ProductsPage });
+
 
 type Row = Product & { id: string; created_at: string };
 

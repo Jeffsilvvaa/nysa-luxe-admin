@@ -8,7 +8,7 @@ import {
 import { motion } from "framer-motion";
 import { brl } from "@/lib/format";
 
-({ component: AnalyticsPage });
+
 
 type Order = { total: number; created_at: string };
 

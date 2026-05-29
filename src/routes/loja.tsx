@@ -17,17 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
-({
-  head: () => ({
-    meta: [
-      { title: "NYSÁ Joias — Semijoias e Acessórios Premium" },
-      { name: "description", content: "Boutique online de semijoias e acessórios premium. Peças selecionadas com entrega para todo o Brasil." },
-      { property: "og:title", content: "NYSÁ Joias — Boutique Premium" },
-      { property: "og:description", content: "Semijoias e acessórios desenhados para celebrar cada detalhe da sua história." },
-    ],
-  }),
-  component: LojaPage,
-});
+
 
 const WPP_LOJA = "5527999611722";
 const INSTAGRAM_URL = "https://www.instagram.com/nysa__joias_";

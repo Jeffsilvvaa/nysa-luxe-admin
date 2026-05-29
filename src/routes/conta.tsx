@@ -9,15 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { brl, dateBR } from "@/lib/format";
 
-({
-  head: () => ({
-    meta: [
-      { title: "Minha Conta — NYSÁ Joias" },
-      { name: "description", content: "Acompanhe seus pedidos e dados da NYSÁ Joias." },
-    ],
-  }),
-  component: ContaPage,
-});
+
 
 const STATUS_LABEL: Record<string, string> = {
   pendente: "Aguardando pagamento",

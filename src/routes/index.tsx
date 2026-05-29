@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useAuth } from "@/lib/auth";
 
-({ component: Lockscreen });
+
 
 function Lockscreen() {
   const navigate = useNavigate();
